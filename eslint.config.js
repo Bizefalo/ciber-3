@@ -1,10 +1,10 @@
-const js = require('@eslint/js');
-const tseslint = require('typescript-eslint');
-const security = require('eslint-plugin-security');
-const reactHooks = require('eslint-plugin-react-hooks');
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import security from 'eslint-plugin-security';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 /** @type {import("eslint").Linter.FlatConfig[]} */
-module.exports = tseslint.config(
+export default tseslint.config(
   js.configs.recommended,
   tseslint.configs.recommended,
   {
@@ -13,6 +13,7 @@ module.exports = tseslint.config(
       'react-hooks': reactHooks,
     },
     rules: {
+      // Seguridad
       'security/detect-object-injection': 'error',
       'security/detect-non-literal-regexp': 'error',
       'security/detect-unsafe-regex': 'error',
@@ -25,8 +26,28 @@ module.exports = tseslint.config(
       'security/detect-non-literal-require': 'error',
       'security/detect-possible-timing-attacks': 'error',
       'security/detect-pseudoRandomBytes': 'error',
+
+      // TypeScript
       '@typescript-eslint/no-unused-vars': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
+
+      // Opcionales si lo necesitas
+      'no-console': 'warn',
+    },
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        project: './tsconfig.json',
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+        require: 'readonly',
+        module: 'readonly',
+        __dirname: 'readonly',
+      },
     },
   }
 );
