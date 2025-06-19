@@ -1,0 +1,4 @@
+eslint.config.js
+next.config.mjs
+postcss.config.mjs
+scripts/init-db.js
