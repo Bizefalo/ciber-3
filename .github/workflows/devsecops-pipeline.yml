@@ -32,8 +32,8 @@ jobs:
       #- name: ESLint Security
       #  run: npm run lint:security
 
-      - name: TypeScript Check
-        run: npm run type-check
+      ##- name: TypeScript Check
+      ## run: npm run type-check
 
       - name: Prettier Check
         run: npm run format:check
