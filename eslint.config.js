@@ -1,9 +1,10 @@
-import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import security from 'eslint-plugin-security';
-import reactHooks from 'eslint-plugin-react-hooks';
+const js = require('@eslint/js');
+const tseslint = require('typescript-eslint');
+const security = require('eslint-plugin-security');
+const reactHooks = require('eslint-plugin-react-hooks');
 
-export default [
+/** @type {import("eslint").Linter.FlatConfig[]} */
+module.exports = [
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
