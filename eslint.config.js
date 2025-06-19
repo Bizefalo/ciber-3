@@ -1,13 +1,12 @@
 const js = require('@eslint/js');
-const tseslint = require('@typescript-eslint/eslint-plugin');
-const tsparser = require('@typescript-eslint/parser');
+const tseslint = require('typescript-eslint');
 const security = require('eslint-plugin-security');
 const reactHooks = require('eslint-plugin-react-hooks');
 
 /** @type {import("eslint").Linter.FlatConfig[]} */
-module.exports = [
+module.exports = tseslint.config(
   js.configs.recommended,
-  ...tseslint.configs.recommended,
+  tseslint.configs.recommended,
   {
     plugins: {
       security,
@@ -29,5 +28,5 @@ module.exports = [
       '@typescript-eslint/no-unused-vars': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
     },
-  },
-];
+  }
+);
