@@ -104,7 +104,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
             </Button>
           </form>
           <div className="mt-4 text-center text-sm text-gray-600">
-            <p>Usa cualquier email y contraseña para acceder</p>
+            <p>Usa sus datos personales para acceder</p>
           </div>
         </CardContent>
       </Card>
