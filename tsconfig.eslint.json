@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "app",
+    "components",
+    "hooks",
+    "lib",
+    "middleware.ts",
+    "tailwind.config.ts"
+  ]
+}

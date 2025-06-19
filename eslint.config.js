@@ -32,16 +32,15 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'warn',
 
       // Opcionales si lo necesitas
-      'no-console': 'warn',
+      'no-console': 'off',
     },
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
-        project: './tsconfig.json',
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-      },
-      globals: {
+        project: './tsconfig.eslint.json',
+        tsconfigRootDir: import.meta.dirname
+        },
+            globals: {
         console: 'readonly',
         process: 'readonly',
         require: 'readonly',
@@ -49,5 +48,13 @@ export default tseslint.config(
         __dirname: 'readonly',
       },
     },
-  }
+  },
+  {
+  ignores: [
+    'eslint.config.js',
+    'next.config.mjs',
+    'postcss.config.mjs',
+    'scripts/init-db.js'
+    ]
+    }
 );
