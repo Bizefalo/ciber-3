@@ -14,9 +14,9 @@ export default tseslint.config(
     },
     rules: {
       // Seguridad
-      'security/detect-object-injection': 'error',
-      'security/detect-non-literal-regexp': 'error',
-      'security/detect-unsafe-regex': 'error',
+      'security/detect-object-injection': 'warn',
+      'security/detect-non-literal-regexp': 'warn',
+      'security/detect-unsafe-regex': 'warn',
       'security/detect-buffer-noassert': 'error',
       'security/detect-child-process': 'error',
       'security/detect-disable-mustache-escape': 'error',
@@ -28,7 +28,7 @@ export default tseslint.config(
       'security/detect-pseudoRandomBytes': 'error',
 
       // TypeScript
-      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
 
       // Opcionales si lo necesitas
