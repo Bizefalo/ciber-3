@@ -55,12 +55,12 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
-      - name: Run Snyk to check for vulnerabilities
+      - name: Snyk Security Scan
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: test --severity-threshold=high --exit-code=0
+          args: --severity-threshold=high
 
       - name: CodeQL Analysis
         uses: github/codeql-action/init@v3
@@ -72,15 +72,10 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
+nalysis
+        uses: github/codeql-action/analyze@v3
 
-
-  # 3. Tests unitarios y de integración
-  test:
-    name: 🧪 Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout código
-        uses: actions/checkout@v4
+actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
