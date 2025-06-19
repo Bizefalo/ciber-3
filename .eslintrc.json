@@ -3,8 +3,7 @@
     "next/core-web-vitals",
     "@typescript-eslint/recommended",
     "plugin:security/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:security/recommended"
+    "plugin:react-hooks/recommended"
   ],
   "plugins": ["security", "@typescript-eslint"],
   "rules": {
