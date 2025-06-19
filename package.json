@@ -9,7 +9,7 @@
     "lint": "next lint",
     "start": "next start",
     "lint:security": "eslint ."
-    "test": "echo \"🧪 No hay tests definidos todavía\" && exit 0"
+    
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
