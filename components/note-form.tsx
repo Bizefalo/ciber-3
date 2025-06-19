@@ -1,40 +1,45 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Save, X, Loader2 } from "lucide-react"
-import type { Note } from "../hooks/use-notes"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Save, X, Loader2 } from "lucide-react";
+import type { Note } from "../hooks/use-notes";
 
 interface NoteFormProps {
-  note?: Note
-  onSave: (title: string, content: string) => Promise<void>
-  onCancel: () => void
-  isSubmitting?: boolean
+  note?: Note;
+  onSave: (title: string, content: string) => Promise<void>;
+  onCancel: () => void;
+  isSubmitting?: boolean;
 }
 
-export function NoteForm({ note, onSave, onCancel, isSubmitting = false }: NoteFormProps) {
-  const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")
+export function NoteForm({
+  note,
+  onSave,
+  onCancel,
+  isSubmitting = false,
+}: NoteFormProps) {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   useEffect(() => {
     if (note) {
-      setTitle(note.title)
-      setContent(note.content)
+      setTitle(note.title);
+      setContent(note.content);
     }
-  }, [note])
+  }, [note]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (title.trim() && content.trim() && !isSubmitting) {
-      await onSave(title.trim(), content.trim())
+      await onSave(title.trim(), content.trim());
     }
-  }
+  };
 
   return (
     <Card>
@@ -67,7 +72,10 @@ export function NoteForm({ note, onSave, onCancel, isSubmitting = false }: NoteF
             />
           </div>
           <div className="flex gap-2">
-            <Button type="submit" disabled={isSubmitting || !title.trim() || !content.trim()}>
+            <Button
+              type="submit"
+              disabled={isSubmitting || !title.trim() || !content.trim()}
+            >
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -80,7 +88,12 @@ export function NoteForm({ note, onSave, onCancel, isSubmitting = false }: NoteF
                 </>
               )}
             </Button>
-            <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onCancel}
+              disabled={isSubmitting}
+            >
               <X className="mr-2 h-4 w-4" />
               Cancelar
             </Button>
@@ -88,5 +101,5 @@ export function NoteForm({ note, onSave, onCancel, isSubmitting = false }: NoteF
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }

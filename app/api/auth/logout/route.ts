@@ -1,7 +1,10 @@
-import { NextResponse } from "next/server"
+import { NextResponse } from "next/server";
 
 export async function POST() {
-  const response = NextResponse.json({ success: true, message: "Sesión cerrada correctamente" })
+  const response = NextResponse.json({
+    success: true,
+    message: "Sesión cerrada correctamente",
+  });
 
   // Eliminar cookie de autenticación
   response.cookies.set("auth-token", "", {
@@ -9,7 +12,7 @@ export async function POST() {
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     maxAge: 0,
-  })
+  });
 
-  return response
+  return response;
 }

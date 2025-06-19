@@ -1,19 +1,19 @@
-import Database from "better-sqlite3"
-import { join } from "path"
-import { mkdirSync, existsSync } from "fs"
-import bcrypt from "bcryptjs"
+import Database from "better-sqlite3";
+import { join } from "path";
+import { mkdirSync, existsSync } from "fs";
+import bcrypt from "bcryptjs";
 
 // Crear directorio data si no existe
-const dataDir = join(process.cwd(), "data")
+const dataDir = join(process.cwd(), "data");
 if (!existsSync(dataDir)) {
-  mkdirSync(dataDir, { recursive: true })
+  mkdirSync(dataDir, { recursive: true });
 }
 
-const dbPath = join(dataDir, "miapp.db")
-const db = new Database(dbPath)
+const dbPath = join(dataDir, "miapp.db");
+const db = new Database(dbPath);
 
 // Configurar WAL mode para mejor concurrencia
-db.pragma("journal_mode = WAL")
+db.pragma("journal_mode = WAL");
 
 // Crear tablas si no existen
 db.exec(`
@@ -38,24 +38,30 @@ db.exec(`
 
   CREATE INDEX IF NOT EXISTS idx_notes_user_id ON notes(user_id);
   CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
-`)
+`);
 
 // Función para inicializar datos de prueba
 export async function initializeDatabase() {
   try {
-    const userExists = db.prepare("SELECT COUNT(*) as count FROM users").get() as { count: number }
+    const userExists = db
+      .prepare("SELECT COUNT(*) as count FROM users")
+      .get() as { count: number };
 
     if (userExists.count === 0) {
       // Crear usuario de prueba
-      const hashedPassword = await bcrypt.hash("password123", 10)
+      const hashedPassword = await bcrypt.hash("password123", 10);
 
-      db.prepare(`
+      db.prepare(
+        `
         INSERT INTO users (email, password, name) 
         VALUES (?, ?, ?)
-      `).run("admin@miapp.com", hashedPassword, "Administrador")
+      `,
+      ).run("admin@miapp.com", hashedPassword, "Administrador");
 
       // Crear algunas notas de ejemplo
-      const user = db.prepare("SELECT id FROM users WHERE email = ?").get("admin@miapp.com") as { id: number }
+      const user = db
+        .prepare("SELECT id FROM users WHERE email = ?")
+        .get("admin@miapp.com") as { id: number };
 
       const sampleNotes = [
         {
@@ -73,22 +79,24 @@ export async function initializeDatabase() {
           content:
             "Recordatorios importantes sobre seguridad:\n\n1. Cambiar contraseñas regularmente\n2. Usar autenticación de dos factores\n3. Mantener el software actualizado\n4. Realizar backups regulares",
         },
-      ]
+      ];
 
       for (const note of sampleNotes) {
-        db.prepare(`
+        db.prepare(
+          `
           INSERT INTO notes (user_id, title, content) 
           VALUES (?, ?, ?)
-        `).run(user.id, note.title, note.content)
+        `,
+        ).run(user.id, note.title, note.content);
       }
 
-      console.log("✅ Base de datos inicializada con usuario de prueba")
-      console.log("📧 Email: admin@miapp.com")
-      console.log("🔑 Password: password123")
+      console.log("✅ Base de datos inicializada con usuario de prueba");
+      console.log("📧 Email: admin@miapp.com");
+      console.log("🔑 Password: password123");
     }
   } catch (error) {
-    console.error("Error inicializando base de datos:", error)
+    console.error("Error inicializando base de datos:", error);
   }
 }
 
-export default db
+export default db;

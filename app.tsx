@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { useAuth } from "./hooks/use-auth"
-import { LoginForm } from "./components/login-form"
-import { Dashboard } from "./components/dashboard"
-import { ToastProvider } from "./components/toast-provider"
+import { useAuth } from "./hooks/use-auth";
+import { LoginForm } from "./components/login-form";
+import { Dashboard } from "./components/dashboard";
+import { ToastProvider } from "./components/toast-provider";
 
 export default function App() {
-  const { user, isLoading, login, logout, isAuthenticated } = useAuth()
+  const { user, isLoading, login, logout, isAuthenticated } = useAuth();
 
   if (isLoading) {
     return (
@@ -16,12 +16,16 @@ export default function App() {
           <p className="mt-2 text-gray-600">Cargando...</p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <ToastProvider>
-      {!isAuthenticated || !user ? <LoginForm onLogin={login} /> : <Dashboard user={user} onLogout={logout} />}
+      {!isAuthenticated || !user ? (
+        <LoginForm onLogin={login} />
+      ) : (
+        <Dashboard user={user} onLogout={logout} />
+      )}
     </ToastProvider>
-  )
+  );
 }

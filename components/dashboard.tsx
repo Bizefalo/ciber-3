@@ -1,90 +1,92 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { LogOut, Plus, StickyNote, Loader2 } from "lucide-react"
-import { useNotes, type Note } from "../hooks/use-notes"
-import { NoteForm } from "./note-form"
-import { NotesList } from "./notes-list"
-import { useToast } from "./toast-provider"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { LogOut, Plus, StickyNote, Loader2 } from "lucide-react";
+import { useNotes, type Note } from "../hooks/use-notes";
+import { NoteForm } from "./note-form";
+import { NotesList } from "./notes-list";
+import { useToast } from "./toast-provider";
 
 interface DashboardProps {
-  user: { name: string; email: string }
-  onLogout: () => void
+  user: { name: string; email: string };
+  onLogout: () => void;
 }
 
 export function Dashboard({ user, onLogout }: DashboardProps) {
-  const { notes, isLoading, addNote, updateNote, deleteNote } = useNotes()
-  const [showForm, setShowForm] = useState(false)
-  const [editingNote, setEditingNote] = useState<Note | null>(null)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const { toast } = useToast()
+  const { notes, isLoading, addNote, updateNote, deleteNote } = useNotes();
+  const [showForm, setShowForm] = useState(false);
+  const [editingNote, setEditingNote] = useState<Note | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const handleSave = async (title: string, content: string) => {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     try {
-      let result
+      let result;
 
       if (editingNote) {
-        result = await updateNote(editingNote.id, title, content)
+        result = await updateNote(editingNote.id, title, content);
       } else {
-        result = await addNote(title, content)
+        result = await addNote(title, content);
       }
 
       if (result.success) {
-        setShowForm(false)
-        setEditingNote(null)
+        setShowForm(false);
+        setEditingNote(null);
         toast({
           title: "Éxito",
-          description: editingNote ? "Nota actualizada correctamente" : "Nota creada correctamente",
-        })
+          description: editingNote
+            ? "Nota actualizada correctamente"
+            : "Nota creada correctamente",
+        });
       } else {
         toast({
           title: "Error",
           description: result.error || "Error al guardar la nota",
           variant: "destructive",
-        })
+        });
       }
     } catch (error) {
       toast({
         title: "Error",
         description: "Error inesperado al guardar la nota",
         variant: "destructive",
-      })
+      });
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   const handleEdit = (note: Note) => {
-    setEditingNote(note)
-    setShowForm(true)
-  }
+    setEditingNote(note);
+    setShowForm(true);
+  };
 
   const handleCancel = () => {
-    setShowForm(false)
-    setEditingNote(null)
-  }
+    setShowForm(false);
+    setEditingNote(null);
+  };
 
   const handleDelete = async (id: number) => {
     if (confirm("¿Estás seguro de que quieres eliminar esta nota?")) {
-      const result = await deleteNote(id)
+      const result = await deleteNote(id);
 
       if (result.success) {
         toast({
           title: "Éxito",
           description: "Nota eliminada correctamente",
-        })
+        });
       } else {
         toast({
           title: "Error",
           description: result.error || "Error al eliminar la nota",
           variant: "destructive",
-        })
+        });
       }
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -113,7 +115,9 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
           {/* Action Bar */}
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">Tus Notas {!isLoading && `(${notes.length})`}</h2>
+              <h2 className="text-2xl font-bold text-gray-900">
+                Tus Notas {!isLoading && `(${notes.length})`}
+              </h2>
               <p className="text-gray-600">Organiza tus ideas y pensamientos</p>
             </div>
             {!showForm && (
@@ -143,9 +147,15 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
           )}
 
           {/* Notes List */}
-          {!isLoading && <NotesList notes={notes} onEdit={handleEdit} onDelete={handleDelete} />}
+          {!isLoading && (
+            <NotesList
+              notes={notes}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
+          )}
         </div>
       </main>
     </div>
-  )
+  );
 }
