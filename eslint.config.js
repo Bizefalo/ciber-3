@@ -1,5 +1,6 @@
 const js = require('@eslint/js');
-const tseslint = require('typescript-eslint');
+const tseslint = require('@typescript-eslint/eslint-plugin');
+const tsparser = require('@typescript-eslint/parser');
 const security = require('eslint-plugin-security');
 const reactHooks = require('eslint-plugin-react-hooks');
 
