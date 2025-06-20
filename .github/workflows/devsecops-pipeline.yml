@@ -93,7 +93,7 @@ jobs:
         run: npm ci
 
       - name: Placeholder de pruebas
-        run: echo "No se han definido tests aún"
+        run: echo "Aun mo se han definido tests"
 
       #- name: Ejecutar tests unitarios
       #  run: npm run test
