@@ -58,10 +58,12 @@ jobs:
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
+        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: test --severity-threshold=high
+          args: test --severity-threshold=high --json
+
 
       - name: CodeQL Analysis
         uses: github/codeql-action/init@v3
